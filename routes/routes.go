@@ -2,10 +2,11 @@ package routes
 
 import (
 	"backenedprojectphase2/handlers"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes() {
-	http.HandleFunc("/", handlers.Home)
-	http.HandleFunc("/employee/", handlers.EmployeeHandler)
+func SetupRoutes(router *gin.Engine, employeeHandler *handlers.EmployeeHandler) {
+
+	router.GET("/employees", employeeHandler.GetEmployees)
 }

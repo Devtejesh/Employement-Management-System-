@@ -1,7 +1,8 @@
 package models
 
 type Employee struct {
-	ID         int
-	Name       string
-	Department string
+	ID    int
+	Name  string
+	Email string
+	Age   int
 }

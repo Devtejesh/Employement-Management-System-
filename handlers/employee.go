@@ -2,35 +2,145 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
+
+	"backenedprojectphase2/dto"
+	"backenedprojectphase2/service"
+
+	"github.com/gin-gonic/gin"
 )
 
-func Home(w http.ResponseWriter, r *http.Request) {
-
+type EmployeeHandler struct {
+	service *service.EmployeeService
 }
 
-func EmployeeHandler(w http.ResponseWriter, r *http.Request) {
-
-	switch r.Method {
-	case http.MethodGet:
-		GetEmployee(w, r)
-	case http.MethodPost:
-		CreateEmployee(w, r)
-	case http.MethodPut:
-		UpdateEmployee(w, r)
-	case http.MethodDelete:
-		DeleteEmployee(w, r)
+func NewEmployeeHandler(service *service.EmployeeService) *EmployeeHandler {
+	return &EmployeeHandler{
+		service: service,
 	}
 }
 
-func GetEmployee(w http.ResponseWriter, r *http.Request) {
+func (h *EmployeeHandler) GetEmployees(c *gin.Context) {
 
+	employees, err := h.service.GetAllEmployees()
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, employees)
 }
-func CreateEmployee(w http.ResponseWriter, r *http.Request) {
 
+func (h *EmployeeHandler) GetEmployeeByID(c *gin.Context) {
+
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid employee ID",
+		})
+		return
+	}
+
+	employee, err := h.service.GetEmployeeByID(id)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "employee not found",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, employee)
 }
-func UpdateEmployee(w http.ResponseWriter, r *http.Request) {
 
+func (h *EmployeeHandler) CreateEmployee(c *gin.Context) {
+
+	var request dto.CreateEmployeeRequest
+
+	err := c.ShouldBindJSON(&request)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid request body",
+		})
+		return
+	}
+
+	err = h.service.CreateEmployee(request)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "employee created successfully",
+	})
 }
-func DeleteEmployee(w http.ResponseWriter, r *http.Request) {
 
+func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
+
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid employee ID",
+		})
+		return
+	}
+
+	var request dto.UpdateEmployeeRequest
+
+	err = c.ShouldBindJSON(&request)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid request body",
+		})
+		return
+	}
+
+	err = h.service.UpdateEmployee(id, request)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "employee updated successfully",
+	})
+}
+
+func (h *EmployeeHandler) DeleteEmployee(c *gin.Context) {
+
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid employee ID",
+		})
+		return
+	}
+
+	err = h.service.DeleteEmployee(id)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "employee deleted successfully",
+	})
 }
