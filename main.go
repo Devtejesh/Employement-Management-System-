@@ -4,6 +4,7 @@ import (
 	"backenedprojectphase2/configs"
 	"backenedprojectphase2/database"
 	"backenedprojectphase2/handlers"
+	"backenedprojectphase2/middleware"
 	"backenedprojectphase2/repository"
 	"backenedprojectphase2/routes"
 	"backenedprojectphase2/service"
@@ -28,18 +29,25 @@ func main() {
 
 	employeeRepo := repository.NewEmployeeRepository(db)
 
-	// 4. Create Service
+	//  Creating Service Repository
 	employeeService := service.NewEmployeeService(employeeRepo)
 
-	// 5. Create Handler
+	// creating Handler
 	employeeHandler := handlers.NewEmployeeHandler(employeeService)
+	userRepo := repository.NewUserRepository(db)
 
-	// 5. Create Gin router
+	authService := service.NewAuthService(userRepo)
+
+	authHandler := handlers.NewAuthHandler(authService)
+
+	//  Create Gin router
 	router := gin.Default()
 
-	// 6. Connect URL to Handler
-	routes.SetupRoutes(router, employeeHandler)
+	router.Use(middleware.Logger())
 
-	// 7. Start server
+	//  Connect URL to Handler
+	routes.SetupRoutes(router, employeeHandler, authHandler)
+
+	//  Start server
 	router.Run(":8081")
 }

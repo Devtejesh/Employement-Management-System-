@@ -2,8 +2,10 @@ package repository
 
 import (
 	"database/sql"
+	"errors"
 
 	"backenedprojectphase2/models"
+	"backenedprojectphase2/utils"
 )
 
 type EmployeeRepository struct {
@@ -19,7 +21,7 @@ func NewEmployeeRepository(db *sql.DB) *EmployeeRepository {
 func (r *EmployeeRepository) GetAllEmployees() ([]models.Employee, error) {
 
 	rows, err := r.db.Query(`
-		SELECT id, name, age, mail
+		SELECT id, name, age, Email
 		FROM employees
 	`)
 
@@ -57,7 +59,7 @@ func (r *EmployeeRepository) GetEmployeeByID(id int) (models.Employee, error) {
 	var employee models.Employee
 
 	err := r.db.QueryRow(`
-		SELECT id, name, age, mail
+		SELECT id, name, age, Email
 		FROM employees
 		WHERE id = $1
 	`, id).Scan(
@@ -68,6 +70,11 @@ func (r *EmployeeRepository) GetEmployeeByID(id int) (models.Employee, error) {
 	)
 
 	if err != nil {
+
+		if errors.Is(err, sql.ErrNoRows) {
+			return models.Employee{}, utils.ErrEmployeeNotFound
+		}
+
 		return models.Employee{}, err
 	}
 
@@ -77,7 +84,7 @@ func (r *EmployeeRepository) GetEmployeeByID(id int) (models.Employee, error) {
 func (r *EmployeeRepository) CreateEmployee(employee models.Employee) error {
 
 	_, err := r.db.Exec(`
-		INSERT INTO employees (name, age, mail)
+		INSERT INTO employees (name, age, Email)
 		VALUES ($1, $2, $3)
 	`,
 		employee.Name,
@@ -92,7 +99,7 @@ func (r *EmployeeRepository) UpdateEmployee(employee models.Employee) error {
 
 	_, err := r.db.Exec(`
 		UPDATE employees
-		SET name = $1, age = $2, mail = $3
+		SET name = $1, age = $2, Email = $3
 		WHERE id = $4
 	`,
 		employee.Name,

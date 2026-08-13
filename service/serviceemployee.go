@@ -14,9 +14,9 @@ type EmployeeService struct {
 	repo *repository.EmployeeRepository
 }
 
-func NewEmployeeService(repo *repository.EmployeeRepository) *EmployeeService {
+func NewEmployeeService(servicerepo *repository.EmployeeRepository) *EmployeeService {
 	return &EmployeeService{
-		repo: repo,
+		repo: servicerepo,
 	}
 }
 
@@ -33,10 +33,10 @@ func (s *EmployeeService) GetAllEmployees() ([]dto.EmployeeResponse, error) {
 	for _, employee := range employees {
 
 		response := dto.EmployeeResponse{
-			ID:   employee.ID,
-			Name: employee.Name,
-			Age:  employee.Age,
-			Mail: employee.Email,
+			ID:    employee.ID,
+			Name:  employee.Name,
+			Age:   employee.Age,
+			Email: employee.Email,
 		}
 
 		responses = append(responses, response)
@@ -54,16 +54,16 @@ func (s *EmployeeService) GetEmployeeByID(id int) (dto.EmployeeResponse, error) 
 	}
 
 	return dto.EmployeeResponse{
-		ID:   employee.ID,
-		Name: employee.Name,
-		Age:  employee.Age,
-		Mail: employee.Email,
+		ID:    employee.ID,
+		Name:  employee.Name,
+		Age:   employee.Age,
+		Email: employee.Email,
 	}, nil
 }
 
 func (s *EmployeeService) CreateEmployee(request dto.CreateEmployeeRequest) error {
 
-	err := validateEmployee(request.Name, request.Age, request.Mail)
+	err := validateEmployee(request.Name, request.Age, request.Email)
 
 	if err != nil {
 		return err
@@ -72,7 +72,7 @@ func (s *EmployeeService) CreateEmployee(request dto.CreateEmployeeRequest) erro
 	employee := models.Employee{
 		Name:  request.Name,
 		Age:   request.Age,
-		Email: request.Mail,
+		Email: request.Email,
 	}
 
 	return s.repo.CreateEmployee(employee)
@@ -80,7 +80,7 @@ func (s *EmployeeService) CreateEmployee(request dto.CreateEmployeeRequest) erro
 
 func (s *EmployeeService) UpdateEmployee(id int, request dto.UpdateEmployeeRequest) error {
 
-	err := validateEmployee(request.Name, request.Age, request.Mail)
+	err := validateEmployee(request.Name, request.Age, request.Email)
 
 	if err != nil {
 		return err
@@ -90,7 +90,7 @@ func (s *EmployeeService) UpdateEmployee(id int, request dto.UpdateEmployeeReque
 		ID:    id,
 		Name:  request.Name,
 		Age:   request.Age,
-		Email: request.Mail,
+		Email: request.Email,
 	}
 
 	return s.repo.UpdateEmployee(employee)

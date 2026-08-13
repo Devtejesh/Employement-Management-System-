@@ -1,11 +1,13 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
 	"backenedprojectphase2/dto"
 	"backenedprojectphase2/service"
+	"backenedprojectphase2/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -48,8 +50,16 @@ func (h *EmployeeHandler) GetEmployeeByID(c *gin.Context) {
 	employee, err := h.service.GetEmployeeByID(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error": "employee not found",
+
+		if errors.Is(err, utils.ErrEmployeeNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "employee not found",
+			})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "internal server error",
 		})
 		return
 	}
