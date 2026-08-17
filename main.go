@@ -15,39 +15,31 @@ import (
 
 func main() {
 
-	// 1. Load configuration
 	config, err := configs.LoadConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// 2. Connect to PostgreSQL
 	db, err := database.ConnectDB(config)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	employeeRepo := repository.NewEmployeeRepository(db)
-
-	//  Creating Service Repository
-	employeeService := service.NewEmployeeService(employeeRepo)
-
-	// creating Handler
-	employeeHandler := handlers.NewEmployeeHandler(employeeService)
 	userRepo := repository.NewUserRepository(db)
 
+	employeeService := service.NewEmployeeService(employeeRepo)
 	authService := service.NewAuthService(userRepo)
+
+	employeeHandler := handlers.NewEmployeeHandler(employeeService)
 
 	authHandler := handlers.NewAuthHandler(authService)
 
-	//  Create Gin router
 	router := gin.Default()
 
 	router.Use(middleware.Logger())
 
-	//  Connect URL to Handler
 	routes.SetupRoutes(router, employeeHandler, authHandler)
 
-	//  Start server
-	router.Run(":8081")
+	router.Run(":8080")
 }

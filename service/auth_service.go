@@ -40,3 +40,27 @@ func (s *AuthService) CreateUser(
 
 	return user, nil
 }
+func (s *AuthService) Login(email string, password string) (models.User, string, error) {
+
+	user, err := s.userrepo.GetUserByEmail(email)
+	if err != nil {
+		return models.User{}, "", err
+	}
+
+	err = utils.CheckPassword(password, user.PasswordHash)
+	if err != nil {
+		return models.User{}, "", err
+	}
+
+	token, err := utils.GenerateToken(
+		user.ID,
+		user.Email,
+		user.Role,
+	)
+
+	if err != nil {
+		return models.User{}, "", err
+	}
+
+	return user, token, nil
+}

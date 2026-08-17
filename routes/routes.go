@@ -11,4 +11,5 @@ func SetupRoutes(router *gin.Engine, employeeHandler *handlers.EmployeeHandler, 
 	router.POST("/register", authHandler.Register)
 
 	router.GET("/employees", employeeHandler.GetEmployees)
+	router.POST("/login", authHandler.Login)
 }
