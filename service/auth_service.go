@@ -7,12 +7,14 @@ import (
 )
 
 type AuthService struct {
-	userrepo *repository.UserRepository
+	userrepo  *repository.UserRepository
+	jwtSecret string
 }
 
-func NewAuthService(userrepo *repository.UserRepository) *AuthService {
+func NewAuthService(userrepo *repository.UserRepository, jwtSecret string) *AuthService {
 	return &AuthService{
-		userrepo: userrepo,
+		userrepo:  userrepo,
+		jwtSecret: jwtSecret,
 	}
 }
 func (s *AuthService) CreateUser(
@@ -56,6 +58,7 @@ func (s *AuthService) Login(email string, password string) (models.User, string,
 		user.ID,
 		user.Email,
 		user.Role,
+		s.jwtSecret,
 	)
 
 	if err != nil {

@@ -97,7 +97,7 @@ func (r *EmployeeRepository) CreateEmployee(employee models.Employee) error {
 
 func (r *EmployeeRepository) UpdateEmployee(employee models.Employee) error {
 
-	_, err := r.db.Exec(`
+	result, err := r.db.Exec(`
 		UPDATE employees
 		SET name = $1, age = $2, Email = $3
 		WHERE id = $4
@@ -108,15 +108,41 @@ func (r *EmployeeRepository) UpdateEmployee(employee models.Employee) error {
 		employee.ID,
 	)
 
-	return err
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return utils.ErrEmployeeNotFound
+	}
+
+	return nil
 }
 
 func (r *EmployeeRepository) DeleteEmployee(id int) error {
 
-	_, err := r.db.Exec(`
+	result, err := r.db.Exec(`
 		DELETE FROM employees
 		WHERE id = $1
 	`, id)
+	if err != nil {
+		return err
+	}
 
-	return err
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return utils.ErrEmployeeNotFound
+	}
+
+	return nil
+
 }

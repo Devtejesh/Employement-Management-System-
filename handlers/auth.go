@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
 	"backenedprojectphase2/dto"
 	"backenedprojectphase2/service"
+	"backenedprojectphase2/utils"
 )
 
 type AuthHandler struct {
@@ -19,6 +21,17 @@ func NewAuthHandler(authService *service.AuthService) *AuthHandler {
 	}
 }
 
+// @Summary Register a new user
+// @Description Creates a new user account
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param request body dto.RegisterRequest true "Registration details"
+// @Success 201 {object} dto.RegisterResponse
+// @Failure 400 {object} map[string]string
+// @Failure 409 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /register [post]
 func (h *AuthHandler) Register(c *gin.Context) {
 
 	var request dto.RegisterRequest
@@ -45,10 +58,17 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		request.Password,
 		request.Role,
 	)
-
 	if err != nil {
+
+		if errors.Is(err, utils.ErrEmailAlreadyExists) {
+			c.JSON(http.StatusConflict, gin.H{
+				"error": "email already registered",
+			})
+			return
+		}
+
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"error": "internal server error",
 		})
 		return
 	}
@@ -60,6 +80,16 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	})
 }
 
+// @Summary User login
+// @Description Authenticates a user and returns a JWT token
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param request body dto.LoginRequest true "Login credentials"
+// @Success 200 {object} dto.LoginResponse
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Router /login [post]
 func (h *AuthHandler) Login(c *gin.Context) {
 
 	var request dto.LoginRequest

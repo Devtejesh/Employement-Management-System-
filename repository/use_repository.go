@@ -2,8 +2,12 @@ package repository
 
 import (
 	"database/sql"
+	"errors"
 
 	"backenedprojectphase2/models"
+	"backenedprojectphase2/utils"
+
+	"github.com/lib/pq"
 )
 
 type UserRepository struct {
@@ -62,6 +66,13 @@ func (r *UserRepository) CreateUser(
 	)
 
 	if err != nil {
+
+		var pqErr *pq.Error
+
+		if errors.As(err, &pqErr) && pqErr.Code == "23505" {
+			return models.User{}, utils.ErrEmailAlreadyExists
+		}
+
 		return models.User{}, err
 	}
 

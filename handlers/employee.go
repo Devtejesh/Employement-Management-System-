@@ -22,6 +22,16 @@ func NewEmployeeHandler(service *service.EmployeeService) *EmployeeHandler {
 	}
 }
 
+// GetAll godoc
+// @Summary Get all employees
+// @Description Returns all employees
+// @Tags Employees
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {array} dto.EmployeeResponse
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /employees [get]
 func (h *EmployeeHandler) GetEmployees(c *gin.Context) {
 
 	employees, err := h.service.GetAllEmployees()
@@ -35,6 +45,19 @@ func (h *EmployeeHandler) GetEmployees(c *gin.Context) {
 
 	c.JSON(http.StatusOK, employees)
 }
+
+// @Summary Get employee by ID
+// @Description Returns a single employee by ID
+// @Tags Employees
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Employee ID"
+// @Success 200 {object} dto.EmployeeResponse
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /employees/{id} [get]
 
 func (h *EmployeeHandler) GetEmployeeByID(c *gin.Context) {
 
@@ -67,6 +90,19 @@ func (h *EmployeeHandler) GetEmployeeByID(c *gin.Context) {
 	c.JSON(http.StatusOK, employee)
 }
 
+// @Summary Create an employee
+// @Description Creates a new employee. Admin access required.
+// @Tags Employees
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param request body dto.CreateEmployeeRequest true "Employee details"
+// @Success 201 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
+// @Router /employees [post]
+
 func (h *EmployeeHandler) CreateEmployee(c *gin.Context) {
 
 	var request dto.CreateEmployeeRequest
@@ -94,6 +130,19 @@ func (h *EmployeeHandler) CreateEmployee(c *gin.Context) {
 	})
 }
 
+// @Summary Update an employee
+// @Description Updates an existing employee by ID. Admin access required.
+// @Tags Employees
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Employee ID"
+// @Param request body dto.UpdateEmployeeRequest true "Updated employee details"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
+// @Router /employees/{id} [put]
 func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.Param("id"))
@@ -113,7 +162,6 @@ func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "invalid request body",
 		})
-		return
 	}
 
 	err = h.service.UpdateEmployee(id, request)
@@ -123,6 +171,7 @@ func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
 			"error": err.Error(),
 		})
 		return
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -130,6 +179,18 @@ func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
 	})
 }
 
+// @Summary Delete an employee
+// @Description Deletes an employee by ID. Admin access required.
+// @Tags Employees
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Employee ID"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /employees/{id} [delete]
 func (h *EmployeeHandler) DeleteEmployee(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.Param("id"))
