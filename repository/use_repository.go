@@ -25,11 +25,12 @@ func (r *UserRepository) GetUserByEmail(email string) (models.User, error) {
 	var user models.User
 
 	err := r.db.QueryRow(`
-		SELECT id, email, password_hash, role
+		SELECT id,name, email, password_hash, role
 		FROM users
 		WHERE email = $1
 	`, email).Scan(
 		&user.ID,
+		&user.Name,
 		&user.Email,
 		&user.PasswordHash,
 		&user.Role,
@@ -43,6 +44,7 @@ func (r *UserRepository) GetUserByEmail(email string) (models.User, error) {
 }
 
 func (r *UserRepository) CreateUser(
+	name string,
 	email string,
 	passwordHash string,
 	role string,
@@ -51,15 +53,17 @@ func (r *UserRepository) CreateUser(
 	var user models.User
 
 	err := r.db.QueryRow(`
-		INSERT INTO users (email, password_hash, role)
-		VALUES ($1, $2, $3)
-		RETURNING id, email, password_hash, role
+		INSERT INTO users (name, email, password_hash, role)
+		VALUES ($1, $2, $3,$4)
+		RETURNING id,name, email, password_hash, role
 	`,
+		name,
 		email,
 		passwordHash,
 		role,
 	).Scan(
 		&user.ID,
+		&user.Name,
 		&user.Email,
 		&user.PasswordHash,
 		&user.Role,

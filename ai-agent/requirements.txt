@@ -4,3 +4,7 @@ langgraph
 google-genai
 requests
 python-dotenv
+psycopg[binary]
+pgvector
+pypdf
+python-multipart

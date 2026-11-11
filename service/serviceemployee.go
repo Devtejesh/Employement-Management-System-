@@ -1,13 +1,14 @@
 package service
 
 import (
-	"errors"
+	"fmt"
 	"net/mail"
 	"strings"
 
 	"backenedprojectphase2/dto"
 	"backenedprojectphase2/models"
 	"backenedprojectphase2/repository"
+	"backenedprojectphase2/utils"
 )
 
 type EmployeeService struct {
@@ -104,21 +105,20 @@ func (s *EmployeeService) DeleteEmployee(id int) error {
 func validateEmployee(name string, age int, email string) error {
 
 	if strings.TrimSpace(name) == "" {
-		return errors.New("name is required")
+		return fmt.Errorf("%w: name is required", utils.ErrInvalidEmployee)
 	}
 
 	if age < 18 || age > 100 {
-		return errors.New("age must be between 18 and 100")
+		return fmt.Errorf("%w: age must be between 18 and 100", utils.ErrInvalidEmployee)
 	}
 
 	if strings.TrimSpace(email) == "" {
-		return errors.New("mail is required")
+		return fmt.Errorf("%w: mail is required", utils.ErrInvalidEmployee)
 	}
 
 	_, err := mail.ParseAddress(email)
-
 	if err != nil {
-		return errors.New("invalid email address")
+		return fmt.Errorf("%w: invalid email address", utils.ErrInvalidEmployee)
 	}
 
 	return nil

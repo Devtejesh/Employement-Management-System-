@@ -38,7 +38,7 @@ func AuthMiddleware(jwtSecret string) gin.HandlerFunc {
 			tokenString,
 			func(token *jwt.Token) (interface{}, error) {
 
-				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				if token.Method != jwt.SigningMethodHS256 {
 					return nil, jwt.ErrTokenSignatureInvalid
 				}
 

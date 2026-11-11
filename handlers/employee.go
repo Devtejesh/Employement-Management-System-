@@ -38,7 +38,7 @@ func (h *EmployeeHandler) GetEmployees(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"error": "internal server error",
 		})
 		return
 	}
@@ -119,15 +119,19 @@ func (h *EmployeeHandler) CreateEmployee(c *gin.Context) {
 	err = h.service.CreateEmployee(request)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
+
+		if errors.Is(err, utils.ErrInvalidEmployee) {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "internal server error",
 		})
 		return
 	}
-
-	c.JSON(http.StatusCreated, gin.H{
-		"message": "employee created successfully",
-	})
 }
 
 // @Summary Update an employee
@@ -162,21 +166,31 @@ func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "invalid request body",
 		})
+		return
 	}
-
 	err = h.service.UpdateEmployee(id, request)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
+
+		if errors.Is(err, utils.ErrInvalidEmployee) {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		if errors.Is(err, utils.ErrEmployeeNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "employee not found",
+			})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "internal server error",
 		})
 		return
-		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": "employee updated successfully",
-	})
 }
 
 // @Summary Delete an employee
@@ -191,6 +205,7 @@ func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
 // @Failure 403 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /employees/{id} [delete]
+
 func (h *EmployeeHandler) DeleteEmployee(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.Param("id"))
@@ -205,8 +220,16 @@ func (h *EmployeeHandler) DeleteEmployee(c *gin.Context) {
 	err = h.service.DeleteEmployee(id)
 
 	if err != nil {
+
+		if errors.Is(err, utils.ErrEmployeeNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "employee not found",
+			})
+			return
+		}
+
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"error": "internal server error",
 		})
 		return
 	}

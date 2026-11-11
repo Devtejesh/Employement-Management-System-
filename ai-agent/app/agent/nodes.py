@@ -1,8 +1,10 @@
+
 import json
 
 from app.agent.prompts import SYSTEM_PROMPT
 from app.agent.state import AgentState
 from app.services.llm import generate_response
+from app.services.rag import retrieve_context
 from app.tools.employees import get_all_employees
 
 
@@ -68,14 +70,27 @@ def response_node(state: AgentState) -> AgentState:
     user_message = state["user_message"]
     tool_result = state.get("tool_result")
 
+    # Retrieve relevant information from uploaded PDFs
+    pdf_context = retrieve_context(user_message)
+
     prompt = f"""
 {SYSTEM_PROMPT}
 
 User request:
 {user_message}
 
-Tool result:
+Retrieved PDF context:
+{pdf_context if pdf_context else "No relevant PDF information found."}
+
+Employee tool result:
 {tool_result}
+
+Instructions:
+- Use PDF context when it is relevant to the user's question.
+- Do not invent company or document information.
+- If PDF context does not contain the answer, clearly say so.
+- Mention the PDF filename and page number when using document information.
+- Preserve employee tool results when answering employee-related questions.
 
 Give the user a clear final response.
 """

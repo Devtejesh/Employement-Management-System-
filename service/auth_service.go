@@ -17,11 +17,18 @@ func NewAuthService(userrepo *repository.UserRepository, jwtSecret string) *Auth
 		jwtSecret: jwtSecret,
 	}
 }
+
 func (s *AuthService) CreateUser(
+	name string,
 	email string,
 	password string,
 	role string,
 ) (models.User, error) {
+
+	// Validate password length.
+	if len(password) < 8 {
+		return models.User{}, utils.ErrWeakPassword
+	}
 
 	// Hash the plain password before storing it.
 	passwordHash, err := utils.HashPassword(password)
@@ -31,6 +38,7 @@ func (s *AuthService) CreateUser(
 
 	// Store the hashed password in PostgreSQL.
 	user, err := s.userrepo.CreateUser(
+		name,
 		email,
 		passwordHash,
 		role,
@@ -42,6 +50,7 @@ func (s *AuthService) CreateUser(
 
 	return user, nil
 }
+
 func (s *AuthService) Login(email string, password string) (models.User, string, error) {
 
 	user, err := s.userrepo.GetUserByEmail(email)

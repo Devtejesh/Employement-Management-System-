@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -45,7 +46,7 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	}
 
 	// Basic validation
-	if request.Email == "" || request.Password == "" {
+	if request.Name == "" || request.Email == "" || request.Password == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "email and password are required",
 		})
@@ -54,15 +55,25 @@ func (h *AuthHandler) Register(c *gin.Context) {
 
 	// Create user through service layer
 	user, err := h.authService.CreateUser(
+		request.Name,
 		request.Email,
 		request.Password,
-		request.Role,
+		"customer",
 	)
+
 	if err != nil {
+		log.Printf("Register error : %v", err)
 
 		if errors.Is(err, utils.ErrEmailAlreadyExists) {
 			c.JSON(http.StatusConflict, gin.H{
 				"error": "email already registered",
+			})
+			return
+		}
+
+		if errors.Is(err, utils.ErrWeakPassword) {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
 			})
 			return
 		}
@@ -129,6 +140,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		"token":   token,
 		"user": gin.H{
 			"id":    user.ID,
+			"name":  user.Name,
 			"email": user.Email,
 			"role":  user.Role,
 		},

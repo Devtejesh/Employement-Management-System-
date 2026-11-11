@@ -50,6 +50,9 @@ func (r *EmployeeRepository) GetAllEmployees() ([]models.Employee, error) {
 
 		employees = append(employees, employee)
 	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
 
 	return employees, nil
 }
