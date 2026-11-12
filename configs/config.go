@@ -7,13 +7,15 @@ import (
 )
 
 type Config struct {
-	HOST      string
-	PORT      string
-	USER      string
-	PASSWORD  string
-	DBNAME    string
-	SSLMODE   string
-	JWTSecret string
+	HOST             string
+	PORT             string
+	USER             string
+	PASSWORD         string
+	DBNAME           string
+	SSLMODE          string
+	JWTSecret        string
+	AIAgentURL       string
+	UploadServiceKey string
 }
 
 func LoadConfig() (*Config, error) {
@@ -22,13 +24,15 @@ func LoadConfig() (*Config, error) {
 		return nil, err
 	}
 	config := &Config{
-		HOST:      os.Getenv("DB_HOST"),
-		PORT:      os.Getenv("DB_PORT"),
-		USER:      os.Getenv("DB_USER"),
-		PASSWORD:  os.Getenv("DB_PASSWORD"),
-		DBNAME:    os.Getenv("DB_NAME"),
-		SSLMODE:   os.Getenv("DB_SSLMODE"),
-		JWTSecret: os.Getenv("DB_JWTSecret"),
+		HOST:             os.Getenv("DB_HOST"),
+		PORT:             os.Getenv("DB_PORT"),
+		USER:             os.Getenv("DB_USER"),
+		PASSWORD:         os.Getenv("DB_PASSWORD"),
+		DBNAME:           os.Getenv("DB_NAME"),
+		SSLMODE:          os.Getenv("DB_SSLMODE"),
+		JWTSecret:        os.Getenv("DB_JWTSecret"),
+		AIAgentURL:       os.Getenv("AI_AGENT_URL"),
+		UploadServiceKey: os.Getenv("UPLOAD_SERVICE_KEY"),
 	}
 	return config, nil
 }

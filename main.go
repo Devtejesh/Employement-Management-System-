@@ -7,6 +7,7 @@ import (
 	"backenedprojectphase2/middleware"
 	"backenedprojectphase2/repository"
 	"backenedprojectphase2/routes"
+
 	"backenedprojectphase2/service"
 	"log"
 	"net/http"
@@ -73,9 +74,14 @@ func main() {
 	employeeHandler := handlers.NewEmployeeHandler(employeeService)
 	authHandler := handlers.NewAuthHandler(authService)
 
+	// PDF upload handler
+	pdfUploadHandler := handlers.NewPDFUploadHandler(
+		config.AIAgentURL,
+		config.UploadServiceKey,
+	)
+
 	router := gin.Default()
 
-	// CORS middleware
 	router.Use(corsMiddleware())
 
 	router.GET("/swagger/*any",
@@ -88,6 +94,7 @@ func main() {
 		employeeHandler,
 		authHandler,
 		config.JWTSecret,
+		pdfUploadHandler,
 	)
 
 	if err := router.Run(":8081"); err != nil {

@@ -1,6 +1,7 @@
 
 /* =========================================
-   BLUEHOUSE TECHNOLOGY - GLOBAL
+   BLUEHOUSE TECHNOLOGY
+   CORPORATE DESIGN SYSTEM
 ========================================= */
 
 * {
@@ -14,8 +15,8 @@
 }
 
 .public-site {
-  background: #f8faff;
-  color: #17213b;
+  background: #ffffff;
+  color: #172b45;
 }
 
 button {
@@ -23,23 +24,14 @@ button {
   cursor: pointer;
 }
 
-/* =========================================
-   PUBLIC HEADER
-========================================= */
-
-.public-header {
-  width: 100%;
-  min-height: 82px;
-  padding: 0 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  background: #ffffff;
-  border-bottom: 1px solid #edf0f7;
-  position: relative;
-  z-index: 10;
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
+
+/* =========================================
+   GLOBAL BRAND
+========================================= */
 
 .public-brand {
   display: inline-flex;
@@ -47,10 +39,10 @@ button {
   gap: 10px;
   border: none;
   background: transparent;
-  color: #172554;
-  font-size: 23px;
+  color: #10365c;
+  font-size: 22px;
   font-weight: 800;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.5px;
   white-space: nowrap;
 }
 
@@ -60,35 +52,93 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  color: white;
-  background: linear-gradient(135deg, #2563eb, #7047e8);
+  border-radius: 9px;
+  background: #174b7a;
+  color: #ffffff;
   font-size: 22px;
   font-weight: 800;
 }
 
-.public-navigation {
+/* =========================================
+   PUBLIC HEADER
+========================================= */
+
+.public-header {
+  width: 100%;
+  min-height: 76px;
+  padding: 0 6%;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.menu-toggle {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #174b7a;
+  font-size: 23px;
+}
+
+.menu-toggle:hover {
+  background: #eaf2fa;
+}
+
+.public-navigation {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 290px;
+  height: calc(100vh - 76px);
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  overflow-y: auto;
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  box-shadow: 0 12px 30px rgba(15, 45, 75, 0.10);
+  transform: translateX(-110%);
+  transition: transform 0.25s ease;
+  z-index: 99;
+}
+
+.public-navigation.open {
+  transform: translateX(0);
 }
 
 .public-nav-link {
-  padding: 10px 0;
+  width: 100%;
+  padding: 13px 15px;
   border: none;
+  border-radius: 8px;
   background: transparent;
-  color: #64708a;
+  color: #64748b;
+  text-align: left;
   font-size: 14px;
   font-weight: 600;
-  transition: color 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .public-nav-link:hover,
 .public-nav-link.active {
-  color: #315fe8;
+  background: #eaf2fa;
+  color: #174b7a;
 }
 
 .public-header-actions {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 18px;
@@ -97,26 +147,48 @@ button {
 .public-header-actions > button:first-child {
   border: none;
   background: transparent;
-  color: #34415d;
+  color: #334155;
   font-size: 14px;
   font-weight: 700;
 }
 
+/* =========================================
+   BUTTONS
+========================================= */
+
 .public-primary-button {
+  padding: 12px 21px;
   border: none;
-  border-radius: 10px;
-  padding: 13px 21px;
-  background: linear-gradient(135deg, #315fe8, #6748df);
+  border-radius: 8px;
+  background: #174b7a;
   color: #ffffff;
   font-size: 14px;
   font-weight: 700;
-  box-shadow: 0 8px 20px rgba(49, 95, 232, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 10px rgba(23, 75, 122, 0.12);
+  transition: 0.2s ease;
 }
 
 .public-primary-button:hover {
+  background: #10365c;
   transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(49, 95, 232, 0.27);
+  box-shadow: 0 7px 18px rgba(23, 75, 122, 0.2);
+}
+
+.public-secondary-button {
+  padding: 12px 20px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #174b7a;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.public-secondary-button:hover {
+  border-color: #174b7a;
+  background: #f1f6fb;
+  transform: translateY(-2px);
 }
 
 /* =========================================
@@ -125,24 +197,24 @@ button {
 
 .public-hero {
   min-height: 570px;
-  padding: 85px 9% 75px;
+  padding: 75px 8%;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
   gap: 45px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 80% 30%, rgba(108, 92, 231, 0.10), transparent 30%),
-    linear-gradient(115deg, #f8faff 0%, #f0f4ff 100%);
+    radial-gradient(circle at 85% 30%, rgba(43, 111, 173, 0.09), transparent 32%),
+    linear-gradient(115deg, #ffffff 0%, #f1f6fb 100%);
 }
 
 .public-hero-content {
-  max-width: 600px;
+  max-width: 650px;
 }
 
 .public-eyebrow {
-  margin: 0 0 20px;
-  color: #4165dc;
+  margin: 0 0 18px;
+  color: #174b7a;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -151,243 +223,58 @@ button {
 
 .public-hero-content h1 {
   margin: 0;
-  color: #172554;
-  font-size: clamp(43px, 5vw, 66px);
-  line-height: 1.12;
-  font-weight: 850;
-  letter-spacing: -2.8px;
+  color: #10365c;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1.13;
+  font-weight: 800;
+  letter-spacing: -2px;
 }
 
 .public-hero-content h1 span {
-  color: #5265e9;
+  color: #2672ad;
 }
 
 .public-hero-content > p {
-  max-width: 510px;
-  margin: 25px 0 30px;
-  color: #68758e;
-  font-size: 16px;
+  max-width: 540px;
+  margin: 22px 0;
+  color: #64748b;
+  font-size: 15px;
   line-height: 1.9;
 }
 
 .public-hero-actions {
+  margin-top: 28px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 14px;
 }
 
-.public-secondary-button {
-  padding: 13px 20px;
-  border: 1px solid #d9e0f1;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #34415d;
-  font-size: 14px;
-  font-weight: 700;
-  transition: all 0.2s ease;
-}
-
-.public-secondary-button:hover {
-  border-color: #5265e9;
-  color: #315fe8;
-  transform: translateY(-2px);
-}
-
 /* =========================================
-   HERO ILLUSTRATION
+   OFFICIAL HERO BANNER
 ========================================= */
 
 .public-hero-visual {
-  min-height: 390px;
-  position: relative;
+  width: 100%;
+  min-height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.visual-orbit {
-  width: 310px;
-  height: 310px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(93, 111, 225, 0.17);
-  border-radius: 50%;
-  background: radial-gradient(circle, #e7eaff 0%, #f4f5ff 65%, transparent 66%);
-}
-
-.visual-orbit::before,
-.visual-orbit::after {
-  content: "";
-  position: absolute;
-  border: 1px dashed rgba(85, 103, 218, 0.25);
-  border-radius: 50%;
-}
-
-.visual-orbit::before {
-  width: 235px;
-  height: 235px;
-}
-
-.visual-orbit::after {
-  width: 365px;
-  height: 365px;
-}
-
-.visual-core {
-  width: 115px;
-  height: 115px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #315fe8, #7852e8);
-  color: white;
-  font-size: 64px;
-  font-weight: 900;
-  box-shadow: 0 20px 45px rgba(69, 83, 218, 0.3);
-  z-index: 1;
-}
-
-.orbit-item {
-  width: 48px;
-  height: 48px;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #e5e9f7;
-  border-radius: 15px;
-  background: white;
-  color: #5265e9;
-  font-size: 23px;
-  box-shadow: 0 8px 22px rgba(42, 56, 110, 0.1);
-  z-index: 2;
-}
-
-.orbit-item:nth-child(1) {
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.orbit-item:nth-child(2) {
-  right: 5px;
-  top: 43%;
-}
-
-.orbit-item:nth-child(3) {
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.orbit-item:nth-child(4) {
-  left: 5px;
-  top: 43%;
-}
-
-.hero-dashboard-card {
-  width: 205px;
-  position: absolute;
-  right: -5px;
-  bottom: 5px;
-  padding: 17px;
-  border: 1px solid #edf0f8;
-  border-radius: 15px;
-  background: white;
-  box-shadow: 0 15px 40px rgba(31, 47, 96, 0.12);
-}
-
-.hero-dashboard-dots {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 13px;
-}
-
-.hero-dashboard-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #d6dbea;
-}
-
-.hero-dashboard-title {
-  color: #34415d;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.hero-chart {
-  height: 65px;
-  margin: 15px 0;
-  display: flex;
-  align-items: end;
-  gap: 8px;
-}
-
-.hero-chart span {
-  flex: 1;
-  border-radius: 5px 5px 0 0;
-  background: linear-gradient(180deg, #7b83ed, #4267e9);
-}
-
-.hero-chart span:nth-child(1) { height: 35%; }
-.hero-chart span:nth-child(2) { height: 55%; }
-.hero-chart span:nth-child(3) { height: 45%; }
-.hero-chart span:nth-child(4) { height: 75%; }
-.hero-chart span:nth-child(5) { height: 60%; }
-.hero-chart span:nth-child(6) { height: 95%; }
-
-.hero-chart-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.hero-chart-footer div {
-  height: 6px;
-  flex: 1;
-  border-radius: 10px;
-  background: #edf0fa;
-}
-
-.hero-growth-card {
-  position: absolute;
-  top: 12px;
-  left: -8px;
-  min-width: 155px;
-  padding: 15px;
-  border: 1px solid #edf0f8;
-  border-radius: 14px;
-  background: white;
-  box-shadow: 0 12px 30px rgba(31, 47, 96, 0.1);
-}
-
-.hero-growth-card > span {
-  color: #4267e9;
-  font-size: 20px;
-}
-
-.hero-growth-card p {
-  margin: 7px 0;
-  color: #7a8499;
-  font-size: 11px;
-}
-
-.hero-growth-card strong {
-  color: #1d9a73;
-  font-size: 20px;
+.public-hero-visual img {
+  width: 100%;
+  max-width: 600px;
+  max-height: 430px;
+  object-fit: contain;
 }
 
 /* =========================================
-   PRODUCTS / SERVICES / CAREERS CARDS
+   HOME PAGE CARDS
 ========================================= */
 
 .public-home-cards {
-  padding: 45px 8% 55px;
+  padding: 55px 8%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
@@ -395,21 +282,22 @@ button {
 }
 
 .public-home-card {
-  min-height: 190px;
-  padding: 27px 23px;
+  min-height: 185px;
+  padding: 26px 23px;
   display: flex;
   align-items: flex-start;
-  gap: 18px;
-  border: 1px solid #edf0f7;
-  border-radius: 17px;
+  gap: 17px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 8px 28px rgba(35, 53, 104, 0.045);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 18px rgba(15, 45, 75, 0.045);
+  transition: 0.25s ease;
 }
 
 .public-home-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 17px 35px rgba(35, 53, 104, 0.1);
+  transform: translateY(-5px);
+  border-color: #c4d7e9;
+  box-shadow: 0 12px 28px rgba(15, 45, 75, 0.09);
 }
 
 .home-card-icon {
@@ -419,36 +307,36 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
+  border-radius: 10px;
   font-size: 22px;
   font-weight: 800;
 }
 
 .home-card-icon.blue {
-  background: #e9efff;
-  color: #3865e8;
+  background: #eaf2fa;
+  color: #174b7a;
 }
 
 .home-card-icon.purple {
-  background: #f0eaff;
-  color: #8053df;
+  background: #f0edfa;
+  color: #6650a4;
 }
 
 .home-card-icon.green {
-  background: #e5f8f0;
-  color: #199b70;
+  background: #e8f5ef;
+  color: #23835a;
 }
 
 .public-home-card h3 {
   margin: 2px 0 9px;
-  color: #1c2a4a;
-  font-size: 18px;
-  font-weight: 800;
+  color: #173b5e;
+  font-size: 17px;
+  font-weight: 750;
 }
 
 .public-home-card p {
   margin: 0 0 15px;
-  color: #778198;
+  color: #64748b;
   font-size: 13px;
   line-height: 1.7;
 }
@@ -457,13 +345,13 @@ button {
   padding: 0;
   border: none;
   background: transparent;
-  color: #4165df;
+  color: #174b7a;
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 750;
 }
 
 .public-home-card button:hover {
-  color: #7a4cdb;
+  color: #2672ad;
 }
 
 /* =========================================
@@ -473,19 +361,19 @@ button {
 .public-scroll-indicator {
   padding: 0 0 25px;
   background: #ffffff;
-  color: #9aa6c1;
+  color: #94a3b8;
   text-align: center;
   font-size: 25px;
 }
 
 /* =========================================
-   AI CHATBOT SHOWCASE
+   AI CHATBOT
 ========================================= */
 
 .chatbot-section {
   padding: 75px 8%;
   overflow: hidden;
-  background: linear-gradient(120deg, #172b66 0%, #3446a0 52%, #6847c9 100%);
+  background: linear-gradient(120deg, #10365c, #174b7a 55%, #2672ad);
 }
 
 .chatbot-showcase {
@@ -521,9 +409,9 @@ button {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-radius: 13px 13px 13px 3px;
+  border-radius: 12px;
   background: #ffffff;
-  color: #26365d;
+  color: #173b5e;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
@@ -532,7 +420,7 @@ button {
 }
 
 .chatbot-greeting span {
-  color: #778198;
+  color: #64748b;
   font-size: 11px;
 }
 
@@ -541,7 +429,7 @@ button {
 }
 
 .chatbot-eyebrow {
-  color: #c9d2ff;
+  color: #c9dced;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -552,13 +440,12 @@ button {
   color: #ffffff;
   font-size: clamp(27px, 3vw, 39px);
   line-height: 1.2;
-  letter-spacing: -1px;
 }
 
 .chatbot-intro p {
   max-width: 350px;
   margin: 0;
-  color: #d7ddff;
+  color: #d9e8f5;
   font-size: 14px;
   line-height: 1.8;
 }
@@ -574,7 +461,7 @@ button {
   display: flex;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 13px;
+  border-radius: 10px;
   background: #ffffff;
   box-shadow: 0 12px 30px rgba(10, 18, 65, 0.2);
 }
@@ -586,12 +473,12 @@ button {
   border: none;
   outline: none;
   background: transparent;
-  color: #243253;
+  color: #243b53;
   font-size: 13px;
 }
 
 .chatbot-input-area input::placeholder {
-  color: #9aa4b8;
+  color: #94a3b8;
 }
 
 .chatbot-input-area button {
@@ -602,8 +489,8 @@ button {
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #4168ed, #7950df);
+  border-radius: 8px;
+  background: #174b7a;
   color: #ffffff;
 }
 
@@ -614,13 +501,13 @@ button {
 
 .chatbot-footer {
   margin-top: 13px;
-  color: #d0d8ff;
+  color: #d9e8f5;
   font-size: 11px;
 }
 
 .chatbot-footer span {
   margin-right: 5px;
-  color: #a9b8ff;
+  color: #a9c9e3;
 }
 
 .chatbot-conversation {
@@ -630,7 +517,7 @@ button {
   padding: 20px;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
@@ -638,7 +525,7 @@ button {
 .chatbot-conversation > div {
   margin-bottom: 12px;
   padding: 12px 15px;
-  border-radius: 10px;
+  border-radius: 9px;
   background: rgba(255, 255, 255, 0.13);
   font-size: 13px;
   line-height: 1.6;
@@ -650,25 +537,30 @@ button {
 
 .public-inner-page {
   min-height: 440px;
-  padding: 100px 10%;
+  padding: 95px 9%;
   background:
-    radial-gradient(circle at 85% 20%, rgba(105, 89, 225, 0.1), transparent 30%),
-    #f5f7ff;
+    radial-gradient(circle at 85% 20%, rgba(38, 114, 173, 0.08), transparent 30%),
+    #f7f9fc;
 }
 
 .public-inner-page h1 {
   max-width: 750px;
   margin: 0 0 20px;
-  color: #172554;
+  color: #10365c;
   font-size: clamp(35px, 4vw, 52px);
   line-height: 1.2;
-  letter-spacing: -1.5px;
+  letter-spacing: -1.3px;
+}
+
+.public-inner-page h2 {
+  color: #10365c;
+  font-size: 30px;
 }
 
 .public-inner-page > p:not(.public-eyebrow) {
   max-width: 650px;
   margin: 0 0 25px;
-  color: #68758e;
+  color: #64748b;
   font-size: 16px;
   line-height: 1.8;
 }
@@ -677,10 +569,10 @@ button {
   display: block;
   margin-top: 25px;
   padding: 12px 18px;
-  border: 1px solid #dce2f1;
-  border-radius: 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
   background: #ffffff;
-  color: #3e5fd6;
+  color: #174b7a;
   font-weight: 700;
 }
 
@@ -690,7 +582,7 @@ button {
 
 .public-footer {
   padding: 45px 8% 20px;
-  background: #111c3a;
+  background: #10365c;
   color: #ffffff;
 }
 
@@ -700,25 +592,25 @@ button {
 
 .public-footer > p {
   margin: 16px 0 35px;
-  color: #aeb9d2;
+  color: #d0dfec;
   font-size: 13px;
 }
 
 .public-footer-bottom {
   padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  color: #8996b4;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  color: #bdcede;
   font-size: 12px;
 }
 
 /* =========================================
-   LOGGED-IN WORKSPACE
+   WORKSPACE LAYOUT
 ========================================= */
 
 .workspace-layout {
   display: flex;
-  background: #f5f7fc;
-  color: #1d2945;
+  background: #f7f9fc;
+  color: #172b45;
 }
 
 .workspace-sidebar {
@@ -727,7 +619,8 @@ button {
   padding: 28px 18px 20px;
   display: flex;
   flex-direction: column;
-  background: #111c3a;
+  flex-shrink: 0;
+  background: #10365c;
   color: #ffffff;
 }
 
@@ -736,9 +629,13 @@ button {
   color: #ffffff;
 }
 
+.workspace-sidebar .public-brand span {
+  background: #2672ad;
+}
+
 .workspace-label {
   margin: 45px 12px 15px;
-  color: #8290b2;
+  color: #b2c9dd;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -757,13 +654,13 @@ button {
   align-items: center;
   gap: 12px;
   border: none;
-  border-radius: 9px;
+  border-radius: 8px;
   background: transparent;
-  color: #aeb9d2;
+  color: #d0dfec;
   text-align: left;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .workspace-nav span {
@@ -774,7 +671,7 @@ button {
 
 .workspace-nav:hover,
 .workspace-nav.active {
-  background: #263968;
+  background: #1e4d76;
   color: #ffffff;
 }
 
@@ -787,7 +684,7 @@ button {
   display: flex;
   align-items: center;
   gap: 11px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .workspace-avatar {
@@ -798,7 +695,7 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4168ed, #8051df);
+  background: #2672ad;
   color: #ffffff;
   font-weight: 800;
 }
@@ -815,24 +712,28 @@ button {
 
 .workspace-user span {
   margin-top: 4px;
-  color: #9ba9c9;
+  color: #c0d4e5;
   font-size: 11px;
 }
 
 .workspace-logout {
   width: 100%;
   padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   background: transparent;
-  color: #d5dcef;
+  color: #ffffff;
   text-align: left;
   font-size: 13px;
 }
 
 .workspace-logout:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
 }
+
+/* =========================================
+   WORKSPACE TOPBAR
+========================================= */
 
 .workspace-main {
   min-width: 0;
@@ -845,36 +746,40 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #e9edf5;
+  border-bottom: 1px solid #e2e8f0;
   background: #ffffff;
-  color: #69758d;
+  color: #64748b;
   font-size: 13px;
 }
 
 .workspace-role {
   padding: 7px 12px;
   border-radius: 20px;
-  background: #edf1ff;
-  color: #4564d7;
+  background: #eaf2fa;
+  color: #174b7a;
   font-size: 11px;
   font-weight: 800;
   text-transform: capitalize;
 }
 
 .workspace-content {
-  padding: 45px;
+  padding: 42px;
 }
+
+/* =========================================
+   WORKSPACE DASHBOARD
+========================================= */
 
 .workspace-heading {
   margin: 0 0 10px;
-  color: #172554;
+  color: #10365c;
   font-size: 32px;
   letter-spacing: -0.8px;
 }
 
 .workspace-description {
   margin: 0 0 30px;
-  color: #778198;
+  color: #64748b;
   font-size: 14px;
   line-height: 1.7;
 }
@@ -886,25 +791,26 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  border-radius: 17px;
-  background: linear-gradient(120deg, #315fe8, #6748df);
+  border-radius: 12px;
+  background: linear-gradient(120deg, #174b7a, #2672ad);
   color: #ffffff;
-  box-shadow: 0 12px 30px rgba(49, 95, 232, 0.16);
+  box-shadow: 0 10px 25px rgba(23, 75, 122, 0.15);
 }
 
 .workspace-welcome-card .public-eyebrow {
-  color: #d6ddff;
+  color: #d0dfec;
 }
 
 .workspace-welcome-card h2 {
   margin: 0 0 12px;
+  color: #ffffff;
   font-size: 25px;
 }
 
 .workspace-welcome-card p:not(.public-eyebrow) {
   max-width: 550px;
   margin: 0;
-  color: #e1e6ff;
+  color: #e0ebf5;
   font-size: 13px;
   line-height: 1.7;
 }
@@ -917,11 +823,15 @@ button {
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 28px;
+  border-radius: 20px;
   background: rgba(255, 255, 255, 0.13);
   font-size: 60px;
   font-weight: 900;
 }
+
+/* =========================================
+   WORKSPACE SHORTCUTS
+========================================= */
 
 .workspace-shortcuts {
   margin-top: 25px;
@@ -937,54 +847,68 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  border: 1px solid #e9edf5;
-  border-radius: 13px;
+  border: 1px solid #e2e8f0;
+  border-radius: 11px;
   background: #ffffff;
   text-align: left;
-  transition: all 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .workspace-shortcuts button:hover {
   transform: translateY(-3px);
-  border-color: #cbd5ff;
-  box-shadow: 0 10px 25px rgba(35, 53, 104, 0.07);
+  border-color: #b8d0e4;
+  box-shadow: 0 8px 22px rgba(15, 45, 75, 0.07);
 }
 
 .workspace-shortcuts button > span {
-  color: #5265e9;
+  color: #174b7a;
   font-size: 22px;
 }
 
 .workspace-shortcuts strong {
-  color: #263452;
+  color: #173b5e;
   font-size: 14px;
 }
 
 .workspace-shortcuts small {
-  color: #8a94a8;
+  color: #64748b;
   font-size: 12px;
 }
+
+/* =========================================
+   EMPLOYEE TABLE
+========================================= */
 
 .workspace-empty,
 .workspace-error {
   padding: 25px;
-  border: 1px solid #e7ebf4;
-  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
   background: #ffffff;
-  color: #7b879e;
+  color: #64748b;
   font-size: 14px;
 }
 
 .workspace-error {
-  border-color: #ffd7d7;
-  background: #fff6f6;
-  color: #c43d3d;
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.workspace-success {
+  margin: 15px 0;
+  padding: 14px 16px;
+  border: 1px solid #bbebce;
+  border-radius: 8px;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 14px;
 }
 
 .workspace-table-wrapper {
   overflow-x: auto;
-  border: 1px solid #e9edf5;
-  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
   background: #ffffff;
 }
 
@@ -996,31 +920,42 @@ button {
 
 .workspace-table th {
   padding: 16px 20px;
-  background: #f5f7fc;
-  color: #78849b;
+  background: #f1f6fb;
+  color: #64748b;
   font-size: 11px;
   letter-spacing: 0.7px;
 }
 
 .workspace-table td {
   padding: 17px 20px;
-  border-top: 1px solid #edf0f6;
-  color: #47536b;
+  border-top: 1px solid #e2e8f0;
+  color: #475569;
   font-size: 13px;
 }
 
+/* =========================================
+   PROFILE AND PDF UPLOAD
+========================================= */
+
 .workspace-profile-card {
-  max-width: 600px;
-  padding: 25px;
-  border: 1px solid #e9edf5;
-  border-radius: 13px;
+  max-width: 700px;
+  padding: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
   background: #ffffff;
+  box-shadow: 0 4px 15px rgba(15, 45, 75, 0.04);
+}
+
+.workspace-profile-card h2 {
+  margin: 0 0 15px;
+  color: #10365c;
+  font-size: 22px;
 }
 
 .workspace-profile-card p {
   padding: 12px 0;
-  border-bottom: 1px solid #f0f2f7;
-  color: #66728a;
+  border-bottom: 1px solid #f1f5f9;
+  color: #64748b;
   font-size: 14px;
 }
 
@@ -1031,7 +966,33 @@ button {
 .workspace-profile-card strong {
   display: inline-block;
   width: 90px;
-  color: #263452;
+  color: #173b5e;
+}
+
+.workspace-profile-card input[type="file"] {
+  width: 100%;
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px dashed #9bb8d0;
+  border-radius: 9px;
+  background: #f7fafd;
+  color: #475569;
+  font-size: 13px;
+}
+
+.workspace-profile-card input[type="file"]::file-selector-button {
+  margin-right: 15px;
+  padding: 9px 13px;
+  border: none;
+  border-radius: 6px;
+  background: #eaf2fa;
+  color: #174b7a;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.workspace-profile-card .public-primary-button {
+  margin-top: 12px;
 }
 
 /* =========================================
@@ -1043,13 +1004,14 @@ button {
     padding: 0 4%;
   }
 
-  .public-navigation {
-    gap: 17px;
-  }
-
   .public-hero {
     padding-left: 6%;
     padding-right: 6%;
+  }
+
+  .public-home-cards {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .chatbot-showcase {
@@ -1059,39 +1021,33 @@ button {
   .chatbot-action {
     grid-column: 2;
   }
-
-  .public-home-cards {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
 }
 
 @media (max-width: 760px) {
   .public-header {
-    padding: 16px 5%;
-    flex-wrap: wrap;
-    gap: 15px;
+    min-height: 70px;
+    padding: 12px 5%;
+    flex-wrap: nowrap;
+    gap: 12px;
   }
 
   .public-brand {
-    font-size: 20px;
+    font-size: 19px;
+  }
+
+  .public-brand span {
+    width: 34px;
+    height: 34px;
   }
 
   .public-navigation {
-    width: 100%;
-    order: 3;
-    justify-content: space-between;
-    gap: 8px;
-    overflow-x: auto;
-  }
-
-  .public-nav-link {
-    flex-shrink: 0;
-    font-size: 12px;
+    top: 70px;
+    width: min(290px, 85vw);
+    height: calc(100vh - 70px);
   }
 
   .public-header-actions {
-    gap: 12px;
+    gap: 10px;
   }
 
   .public-header-actions > button:first-child {
@@ -1099,26 +1055,27 @@ button {
   }
 
   .public-header-actions .public-primary-button {
-    padding: 10px 13px;
+    padding: 10px 12px;
     font-size: 12px;
   }
 
   .public-hero {
-    padding: 65px 7% 45px;
+    min-height: auto;
+    padding: 55px 6%;
     grid-template-columns: 1fr;
     gap: 25px;
   }
 
   .public-hero-content h1 {
-    font-size: 45px;
+    font-size: 43px;
   }
 
   .public-hero-visual {
-    min-height: 350px;
+    min-height: 250px;
   }
 
   .public-home-cards {
-    padding: 30px 6%;
+    padding: 35px 6%;
     grid-template-columns: 1fr;
   }
 
@@ -1154,7 +1111,7 @@ button {
 
   .public-inner-page {
     min-height: 400px;
-    padding: 75px 7%;
+    padding: 70px 7%;
   }
 
   .public-footer {
@@ -1205,7 +1162,7 @@ button {
 
 @media (max-width: 420px) {
   .public-hero-content h1 {
-    font-size: 38px;
+    font-size: 36px;
   }
 
   .public-hero-actions {
@@ -1215,18 +1172,6 @@ button {
 
   .public-hero-actions button {
     width: 100%;
-  }
-
-  .visual-orbit {
-    transform: scale(0.85);
-  }
-
-  .hero-dashboard-card {
-    right: -8px;
-  }
-
-  .hero-growth-card {
-    left: -8px;
   }
 
   .workspace-heading {
@@ -1239,5 +1184,9 @@ button {
 
   .workspace-welcome-symbol {
     display: none;
+  }
+
+  .workspace-profile-card {
+    padding: 18px;
   }
 }

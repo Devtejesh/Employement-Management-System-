@@ -1,16 +1,57 @@
 
+/* =========================================
+   BLUEHOUSE TECHNOLOGY
+   GLOBAL STYLES & TYPOGRAPHY
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* =========================================
+   ROOT VARIABLES
+========================================= */
+
 :root {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #172033;
-  background: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  color: #172b45;
+  background: #ffffff;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --primary: #174b7a;
+  --primary-dark: #10365c;
+  --primary-light: #eaf2fa;
+
+  --text-primary: #172b45;
+  --text-secondary: #64748b;
+
+  --background: #ffffff;
+  --background-soft: #f7f9fc;
+
+  --border: #e2e8f0;
+
+  --success: #15803d;
+  --danger: #b91c1c;
+
+  --radius-sm: 6px;
+  --radius-md: 9px;
+  --radius-lg: 12px;
+
+  --shadow-sm: 0 2px 8px rgba(15, 45, 75, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 45, 75, 0.09);
 }
+
+/* =========================================
+   GLOBAL RESET
+========================================= */
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -20,15 +61,62 @@ html {
 }
 
 body {
-  margin: 0;
   min-width: 320px;
   min-height: 100vh;
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+
+  color: var(--text-primary);
+  background: var(--background);
+
+  -webkit-font-smoothing: antialiased;
 }
+
+/* =========================================
+   ROOT APPLICATION
+========================================= */
 
 #root {
   width: 100%;
   min-height: 100vh;
 }
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+p,
+span,
+label,
+a,
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+p {
+  line-height: 1.7;
+}
+
+/* =========================================
+   FORM ELEMENTS
+========================================= */
 
 button,
 input,
@@ -41,12 +129,73 @@ button {
   cursor: pointer;
 }
 
+input,
+textarea,
+select {
+  color: var(--text-primary);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* =========================================
+   LINKS
+========================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================
+   IMAGES
+========================================= */
+
 img {
   max-width: 100%;
   display: block;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* =========================================
+   SELECTION
+========================================= */
+
+::selection {
+  background: #d5e7f7;
+  color: #10365c;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bdcbd9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8da6bd;
+}
+
+/* =========================================
+   RESPONSIVE BASE
+========================================= */
+
+@media (max-width: 600px) {
+  body {
+    font-size: 13px;
+  }
 }
